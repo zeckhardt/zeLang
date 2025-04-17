@@ -30,7 +30,7 @@ class Scanner(
     fun scanTokens(): List<Token> {
         while (!isAtEnd()) {
             start = current
-            scanTokens()
+            scanToken()
         }
 
         tokens.add(Token(TokenType.EOF, "",null, line))

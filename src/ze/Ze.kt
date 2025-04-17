@@ -5,11 +5,12 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.Scanner
 import kotlin.system.exitProcess
 
 object Ze {
     var hadError = false
+    var hadRuntimeError = false
+    private val interpreter: Interpreter = Interpreter()
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -29,6 +30,7 @@ object Ze {
         rn(source)
 
         if (hadError) exitProcess(64)
+        if (hadRuntimeError) exitProcess(70)
     }
 
     private fun runPrompt() {
@@ -43,11 +45,16 @@ object Ze {
 
     private fun rn(source: String) {
         val scanner = Scanner(source)
-        var tokens = scanner.scanToken()
+        val tokens = scanner.scanTokens()
 
-        for (token in tokens) {
-            println(token)
-        }
+        val parser = Parser(tokens)
+        val expression = parser.parse()
+
+        // Stop if there was a syntax error
+        if (hadError) return
+
+        interpreter.interpret(expression)
+
     }
 
     fun error(line: Int, message: String) {
@@ -57,5 +64,18 @@ object Ze {
     private fun report(line: Int, where: String, message: String) {
         System.err.println("[line $line] Error$where: $message")
         hadError = true
+    }
+
+    fun error(token: Token, message: String) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, "at end", message)
+        } else {
+            report(token.line, " at '${token.lexeme}'", message)
+        }
+    }
+
+    fun runtimeError(error: RuntimeError) {
+        System.err.println("${error.message} \n[${error.token.line}]")
+        hadRuntimeError = true
     }
 }
