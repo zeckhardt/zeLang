@@ -45,6 +45,14 @@ class Interpreter {
                             return left + right
                         }
 
+                        if (left is String && right is Double) {
+                            return left + right.toString()
+                        }
+
+                        if (left is Double && right is String) {
+                            return left.toString() + right
+                        }
+
                         throw RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
                     }
                     TokenType.MINUS -> {
