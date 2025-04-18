@@ -2,10 +2,11 @@ package ze
 
 class Interpreter {
 
-    fun interpret(expression: Expr?) {
+    fun interpret(statements: List<Stmt>) {
         try {
-            val value = evaluate(expression)
-            println(stringify(value))
+            for (statement in statements) {
+                execute(statement)
+            }
         } catch (error: RuntimeError) {
             Ze.runtimeError(error)
         }
@@ -57,15 +58,15 @@ class Interpreter {
                     }
                     TokenType.MINUS -> {
                         checkNumberOperands(expr.operator, left, right)
-                        (left as Double) - (right as Double)
+                        return (left as Double) - (right as Double)
                     }
                     TokenType.STAR -> {
                         checkNumberOperands(expr.operator, left, right)
-                        (left as Double) * (right as Double)
+                        return (left as Double) * (right as Double)
                     }
                     TokenType.SLASH -> {
                         checkNumberOperands(expr.operator, left, right)
-                        (left as Double) / (right as Double)
+                        return (left as Double) / (right as Double)
                     }
                     else -> null
                 }
@@ -80,7 +81,7 @@ class Interpreter {
                 return when (expr.operator.type) {
                     TokenType.MINUS -> {
                         checkNumberOperand(expr.operator, right)
-                        -(right as Double)
+                        return -(right as Double)
                     }
                     TokenType.BANG -> !isTruthy(right)
                     else -> null
@@ -88,6 +89,21 @@ class Interpreter {
             }
 
             null -> TODO()
+        }
+    }
+
+    private fun execute(stmt: Stmt): Void? {
+        when (stmt) {
+            is Stmt.Expression -> {
+                evaluate(stmt.expression)
+                return null
+            }
+
+            is Stmt.Print -> {
+                val value = evaluate(stmt.expression)
+                println(stringify(value))
+                return null
+            }
         }
     }
 
