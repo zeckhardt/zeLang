@@ -67,6 +67,9 @@ class Interpreter {
                     }
                     TokenType.SLASH -> {
                         checkNumberOperands(expr.operator, left, right)
+                        if (right == 0) {
+                            throw RuntimeError(expr.operator, "Divide by zero.")
+                        }
                         return (left as Double) / (right as Double)
                     }
                     else -> null
