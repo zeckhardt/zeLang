@@ -2,13 +2,15 @@
 
 ## Grammar rules:
 
-`program -> statement* EOF ;`
+`program        -> statement* EOF ;`
 
-`statement -> exprStmt | printStmt ;`
+`statement      -> exprStmt | printStmt | ifStmt ;`
 
-`exprStmt -> expression ';' ;`
+`exprStmt       -> expression ';' ;`
 
-`printStmt -> "print" expression ";" ;`
+`printStmt      -> "print" expression ";" ;`
+
+`ifStmt         -> "if" "(" expression ")" statement ( else statement )? ;`
 
 `expression     -> equality ;`
 

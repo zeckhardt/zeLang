@@ -12,6 +12,7 @@ class Interpreter {
         }
     }
 
+    // Expressions
     fun evaluate(expr: Expr?): Any? {
         return when (expr) {
             is Expr.Binary -> {
@@ -92,19 +93,27 @@ class Interpreter {
         }
     }
 
+    // Statements
     private fun execute(stmt: Stmt): Void? {
         when (stmt) {
             is Stmt.Expression -> {
                 evaluate(stmt.expression)
-                return null
             }
 
             is Stmt.Print -> {
                 val value = evaluate(stmt.expression)
                 println(stringify(value))
-                return null
+            }
+
+            is Stmt.If -> {
+                if (isTruthy(evaluate(stmt.condition))) {
+                    execute(stmt.thenBranch)
+                } else if (stmt.elseBranch != null) {
+                    execute(stmt.elseBranch)
+                }
             }
         }
+        return null
     }
 
     private fun isTruthy(obj: Any?): Boolean {
