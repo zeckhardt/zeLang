@@ -18,7 +18,9 @@
 
 `ifStmt         -> "if" "(" expression ")" statement ( else statement )? ;`
 
-`expression     -> equality ;`
+`expression     -> comma ;`
+
+`comma          -> assignment ( "," assignment )* ;`
 
 `assignment     -> IDENTIFIER '=' assignment | equality ;`
 

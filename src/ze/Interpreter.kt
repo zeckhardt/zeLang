@@ -105,6 +105,16 @@ class Interpreter {
                 return value
             }
 
+            is Expr.Comma -> {
+                var result: Any? = null
+
+                for (subExpr in expr.expressions) {
+                    result = evaluate(subExpr)
+                }
+
+                return result
+            }
+
             null -> null
         }
     }

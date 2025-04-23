@@ -105,10 +105,27 @@ class Parser(
     }
 
     /**
-     * expression -> equality ;
+     * expression -> comma ;
      */
     private fun expression(): Expr {
         return assignment()
+    }
+
+    /**
+     * comma -> assignment ( "," assignment )* ;
+     */
+    private fun comma(): Expr {
+        val expressions = ArrayList<Expr>()
+
+        while (match(TokenType.COMMA)) {
+            expressions.add(assignment())
+        }
+
+        if (expressions.size == 1) {
+            return expressions[0]
+        }
+
+        return Expr.Comma(expressions)
     }
 
     /**
