@@ -50,6 +50,7 @@ class Parser(
     private fun statement(): Stmt {
         if (match(TokenType.IF)) return ifStatement()
         if (match(TokenType.WHILE)) return whileStatement()
+        if (match(TokenType.FOR)) return forStatement()
         if (match(TokenType.PRINT)) return printStatement()
         if (match(TokenType.LEFT_BRACE)) return Stmt.Block(block())
 
@@ -115,6 +116,48 @@ class Parser(
         val body: Stmt = statement()
 
         return Stmt.While(condition, body)
+    }
+
+    private fun forStatement(): Stmt {
+        consume(TokenType.LEFT_PAREN, "Expect '(' after 'for'.")
+
+        // initializer
+        var initializer: Stmt? = null
+        if (match(TokenType.SEMICOLON)) {
+            val initializer: Stmt? = null
+        } else if (match(TokenType.VAR)) {
+            initializer = varDeclaration()
+        } else {
+            initializer = expressionStatement()
+        }
+
+        // condition
+        var condition: Expr? = null
+        if (!check(TokenType.SEMICOLON)) {
+            condition = expression()
+        }
+        consume(TokenType.SEMICOLON, "Expect ';' after loop condition.")
+
+        // increment
+        var increment: Expr? = null
+        if (!check(TokenType.RIGHT_PAREN)) {
+            increment = expression()
+        }
+        consume(TokenType.RIGHT_PAREN, "Expect ')' after for clause.")
+        var body: Stmt = statement()
+
+        if (increment != null) {
+            body = Stmt.Block(listOf(body, Stmt.Expression(increment)))
+        }
+
+        if (condition == null) condition = Expr.Literal(true)
+        body = Stmt.While(condition, body)
+
+        if (initializer != null) {
+            body = Stmt.Block(listOf(initializer, body))
+        }
+
+        return body
     }
 
     /**
