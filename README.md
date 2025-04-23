@@ -8,7 +8,7 @@
 
 `varDecl        -> "var" IDENTIFIER ( "=" expression )? ";" ;`
 
-`statement      -> exprStmt | printStmt | block | ifStmt ;`
+`statement      -> exprStmt | printStmt | block | ifStmt | whileStmt ;`
 
 `exprStmt       -> expression ';' ;`
 
@@ -18,13 +18,19 @@
 
 `ifStmt         -> "if" "(" expression ")" statement ( else statement )? ;`
 
+`whileStmt      -> "while" "(" expression ")" statement ;`
+
 `expression     -> comma ;`
 
 `comma          -> conditional ( "," conditional )* ;`
 
 `conditional    -> assignment ( "?" expression ":" conditional )? ;`
 
-`assignment     -> IDENTIFIER '=' assignment | equality ;`
+`assignment     -> IDENTIFIER '=' assignment | logic_or ;`
+
+`logic_or       -> logic_and ( "or" logic_and )* ;`
+
+`logic_and      -> equality ( "and" equality )* ;`
 
 `equality       -> ( ( "!=" | "==" ) comparison )* ;`
 

@@ -174,6 +174,12 @@ class Interpreter {
                 }
             }
 
+            is Stmt.While -> {
+                while (isTruthy(evaluate(stmt.condition))) {
+                    execute(stmt.body)
+                }
+            }
+
             null -> null
         }
         return null
