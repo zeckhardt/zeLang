@@ -2,17 +2,25 @@
 
 ## Grammar rules:
 
-`program        -> statement* EOF ;`
+`program        -> declaration* EOF ;`
 
-`statement      -> exprStmt | printStmt | ifStmt ;`
+`declaration    -> varDecl | statement ;`
+
+`varDecl        -> "var" IDENTIFIER ( "=" expression )? ";" ;`
+
+`statement      -> exprStmt | printStmt | block | ifStmt ;`
 
 `exprStmt       -> expression ';' ;`
 
 `printStmt      -> "print" expression ";" ;`
 
+`block          -> "{" declaration "}" ;`
+
 `ifStmt         -> "if" "(" expression ")" statement ( else statement )? ;`
 
 `expression     -> equality ;`
+
+`assignment     -> IDENTIFIER '=' assignment | equality ;`
 
 `equality       -> ( ( "!=" | "==" ) comparison )* ;`
 
@@ -24,4 +32,4 @@
 
 `unary          -> ( "!" | "-" ) unary | primary ;`
 
-`primary        -> NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;`
+`primary        -> NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER;`

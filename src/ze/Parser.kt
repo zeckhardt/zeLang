@@ -6,13 +6,42 @@ class Parser(
     private var curr: Int = 0
     private class ParseError: RuntimeException()
 
-    fun parse(): List<Stmt> {
-        val statements = mutableListOf<Stmt>()
+    fun parse(): List<Stmt?> {
+        val statements = mutableListOf<Stmt?>()
         while (!isAtEnd()) {
-            statements.add(statement())
+            statements.add(declaration())
         }
 
         return statements
+    }
+
+    /**
+     * declaration -> varDecl | statement ;
+     */
+    private fun declaration(): Stmt? {
+        try {
+            if (match(TokenType.VAR)) return varDeclaration()
+
+            return statement()
+        } catch (_: ParseError) {
+            synchronize()
+            return null
+        }
+    }
+
+    /**
+     * varDecl-> "var" IDENTIFIER ( "=" expression )? ";" ;
+     */
+    private fun varDeclaration(): Stmt {
+        val name: Token = consume(TokenType.IDENTIFIER, "Expect variable name.")
+
+        var initializer: Expr? = null
+        if (match(TokenType.EQUAL)) {
+            initializer = expression()
+        }
+
+        consume(TokenType.SEMICOLON, "Expect ';' after variable declaration.")
+        return Stmt.Var(name, initializer)
     }
 
     /**
@@ -21,6 +50,7 @@ class Parser(
     private fun statement(): Stmt {
         if (match(TokenType.IF)) return ifStatement()
         if (match(TokenType.PRINT)) return printStatement()
+        if (match(TokenType.LEFT_BRACE)) return Stmt.Block(block())
 
         return expressionStatement()
     }
@@ -44,6 +74,20 @@ class Parser(
     }
 
     /**
+     * block -> "{" declaration "}" ;
+     */
+    private fun block(): List<Stmt?> {
+        val statements = ArrayList<Stmt?>()
+
+        while (!check(TokenType.RIGHT_BRACE) && !isAtEnd()) {
+            statements.add(declaration())
+        }
+
+        consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
+        return statements
+    }
+
+    /**
      * ifStmt -> "if" "(" expression ")" statement ( else statement )? ;
      */
     private fun ifStatement(): Stmt {
@@ -64,7 +108,28 @@ class Parser(
      * expression -> equality ;
      */
     private fun expression(): Expr {
-        return equality()
+        return assignment()
+    }
+
+    /**
+     * assignment > IDENTIFIER '=' assignment | equality ;
+     */
+    private fun assignment(): Expr {
+        val expr = equality()
+
+        if (match(TokenType.EQUAL)) {
+            val equals = previous()
+            val value = assignment()
+
+            if (expr is Expr.Variable) {
+                val name: Token = expr.name
+                return Expr.Assign(name, value)
+            }
+
+            error(equals, "Invalid assignment target.")
+        }
+
+        return expr
     }
 
     /**
@@ -146,6 +211,10 @@ class Parser(
 
         if (match(TokenType.NUMBER, TokenType.STRING)) {
             return Expr.Literal(previous().literal)
+        }
+
+        if (match(TokenType.IDENTIFIER)) {
+            return Expr.Variable(previous())
         }
 
         if (match(TokenType.LEFT_PAREN)) {

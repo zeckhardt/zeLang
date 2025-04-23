@@ -1,6 +1,9 @@
 package ze
 
+import Environment
+
 class Interpreter {
+    private var environment = Environment()
 
     fun interpret(statements: List<Stmt>) {
         try {
@@ -92,12 +95,22 @@ class Interpreter {
                 }
             }
 
-            null -> TODO()
+            is Expr.Variable -> {
+                return environment.get(expr.name)
+            }
+
+            is Expr.Assign -> {
+                val value: Any? = evaluate(expr.value)
+                environment.assign(expr.name, value)
+                return value
+            }
+
+            null -> null
         }
     }
 
     // Statements
-    private fun execute(stmt: Stmt): Void? {
+    private fun execute(stmt: Stmt?): Void? {
         when (stmt) {
             is Stmt.Expression -> {
                 evaluate(stmt.expression)
@@ -108,6 +121,19 @@ class Interpreter {
                 println(stringify(value))
             }
 
+            is Stmt.Var -> {
+                var value: Any? = null
+                if (stmt.initializer != null) {
+                    value = evaluate(stmt.initializer)
+                }
+
+                environment.define(stmt.name.lexeme, value)
+            }
+
+            is Stmt.Block -> {
+                executeBlock(stmt.statements, Environment(environment))
+            }
+
             is Stmt.If -> {
                 if (isTruthy(evaluate(stmt.condition))) {
                     execute(stmt.thenBranch)
@@ -115,8 +141,23 @@ class Interpreter {
                     execute(stmt.elseBranch)
                 }
             }
+
+            null -> null
         }
         return null
+    }
+
+    fun executeBlock(statements: List<Stmt?>, environment: Environment) {
+        val previous: Environment = this.environment
+        try {
+            this.environment = environment
+
+            for (statement in statements) {
+                execute(statement)
+            }
+        } finally {
+            this.environment = previous
+        }
     }
 
     private fun isTruthy(obj: Any?): Boolean {
