@@ -63,6 +63,8 @@ class Scanner(
                 } else {
                     addToken(TokenType.SLASH)
                 }
+            '?' -> addToken(TokenType.QUESTION)
+            ':' -> addToken(TokenType.COLON)
             ' ' -> {}
             '\r' -> {}
             '\t' -> {}

@@ -8,4 +8,5 @@ sealed class Expr {
     data class Variable(val name: Token) : Expr()
     data class Literal(val value: Any?) : Expr()
     data class Comma(val expressions: List<Expr>) : Expr()
+    data class Conditional(val condition: Expr, val thenBranch: Expr, val elseBranch: Expr) : Expr()
 }

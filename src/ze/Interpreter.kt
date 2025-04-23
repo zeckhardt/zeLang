@@ -115,6 +115,16 @@ class Interpreter {
                 return result
             }
 
+            is Expr.Conditional -> {
+                val conditionalValue: Any? = evaluate(expr.condition)
+
+                return if (isTruthy(conditionalValue)) {
+                    evaluate(expr.thenBranch)
+                } else {
+                    evaluate(expr.elseBranch)
+                }
+            }
+
             null -> null
         }
     }

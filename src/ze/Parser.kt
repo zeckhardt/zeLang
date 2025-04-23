@@ -112,13 +112,14 @@ class Parser(
     }
 
     /**
-     * comma -> assignment ( "," assignment )* ;
+     * comma -> conditional ( "," conditional )* ;
      */
     private fun comma(): Expr {
         val expressions = ArrayList<Expr>()
+        expressions.add(conditional())
 
         while (match(TokenType.COMMA)) {
-            expressions.add(assignment())
+            expressions.add(conditional())
         }
 
         if (expressions.size == 1) {
@@ -126,6 +127,23 @@ class Parser(
         }
 
         return Expr.Comma(expressions)
+    }
+
+    /**
+     *  conditional -> assignment ( "?" expression ":" conditional )? ;
+     *
+     */
+    private fun conditional(): Expr {
+        var expr = assignment()
+
+        if (match(TokenType.QUESTION)) {
+            val thenBranch: Expr = expression()
+            consume(TokenType.COLON, "Expect ':' after then branch of conditional expression.")
+            val elseBranch: Expr = conditional()
+            expr = Expr.Conditional(expr, thenBranch, elseBranch)
+        }
+
+        return expr
     }
 
     /**

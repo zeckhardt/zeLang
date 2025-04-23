@@ -20,7 +20,9 @@
 
 `expression     -> comma ;`
 
-`comma          -> assignment ( "," assignment )* ;`
+`comma          -> conditional ( "," conditional )* ;`
+
+`conditional    -> assignment ( "?" expression ":" conditional )? ;`
 
 `assignment     -> IDENTIFIER '=' assignment | equality ;`
 
