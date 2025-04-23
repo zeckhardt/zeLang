@@ -108,7 +108,7 @@ class Parser(
      * expression -> comma ;
      */
     private fun expression(): Expr {
-        return assignment()
+        return comma()
     }
 
     /**
