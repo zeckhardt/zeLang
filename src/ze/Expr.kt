@@ -9,4 +9,5 @@ sealed class Expr {
     data class Literal(val value: Any?) : Expr()
     data class Comma(val expressions: List<Expr>) : Expr()
     data class Conditional(val condition: Expr, val thenBranch: Expr, val elseBranch: Expr) : Expr()
+    data class Logical(val left: Expr, val operator: Token, val right: Expr) : Expr()
 }

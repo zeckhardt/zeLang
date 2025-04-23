@@ -125,6 +125,18 @@ class Interpreter {
                 }
             }
 
+            is Expr.Logical -> {
+                val left: Any? = evaluate(expr.left)
+
+                if (expr.operator.type == TokenType.OR) {
+                    if (isTruthy(left)) return left
+                } else {
+                    if (!isTruthy(left)) return left
+                }
+
+                return evaluate(expr.right)
+            }
+
             null -> null
         }
     }
