@@ -7,4 +7,6 @@ sealed class Stmt {
     data class Block(val statements: List<Stmt?>) : Stmt()
     data class If(val condition: Expr, val thenBranch: Stmt, val elseBranch: Stmt?) : Stmt()
     data class While(val condition: Expr, val body: Stmt) : Stmt()
+    class Break : Stmt()
+    class Continue : Stmt()
 }

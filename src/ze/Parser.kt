@@ -5,6 +5,7 @@ class Parser(
 ) {
     private var curr: Int = 0
     private class ParseError: RuntimeException()
+    private var loopDepth: Int = 0
 
     fun parse(): List<Stmt?> {
         val statements = mutableListOf<Stmt?>()
@@ -45,13 +46,15 @@ class Parser(
     }
 
     /**
-     * statement -> exprStmt | printStmt ;
+     * statement -> exprStmt | printStmt | ifStmt | forStmt | whileStmt | breakStmt | block;
      */
     private fun statement(): Stmt {
         if (match(TokenType.IF)) return ifStatement()
         if (match(TokenType.WHILE)) return whileStatement()
         if (match(TokenType.FOR)) return forStatement()
         if (match(TokenType.PRINT)) return printStatement()
+        if (match(TokenType.BREAK)) return breakStatement()
+        if (match(TokenType.CONTINUE)) return continueStatement()
         if (match(TokenType.LEFT_BRACE)) return Stmt.Block(block())
 
         return expressionStatement()
@@ -113,9 +116,14 @@ class Parser(
         consume(TokenType.LEFT_PAREN, "Expect '(' after 'while'.")
         val condition: Expr = expression()
         consume(TokenType.RIGHT_PAREN, "Expect ')' after condition.")
-        val body: Stmt = statement()
+        try {
+            loopDepth++
+            val body: Stmt = statement()
 
-        return Stmt.While(condition, body)
+            return Stmt.While(condition, body)
+        } finally {
+            loopDepth--
+        }
     }
 
     private fun forStatement(): Stmt {
@@ -144,20 +152,49 @@ class Parser(
             increment = expression()
         }
         consume(TokenType.RIGHT_PAREN, "Expect ')' after for clause.")
-        var body: Stmt = statement()
 
-        if (increment != null) {
-            body = Stmt.Block(listOf(body, Stmt.Expression(increment)))
+        try {
+            loopDepth++
+
+            var body: Stmt = statement()
+
+            if (increment != null) {
+                body = Stmt.Block(listOf(body, Stmt.Expression(increment)))
+            }
+
+            if (condition == null) condition = Expr.Literal(true)
+            body = Stmt.While(condition, body)
+
+            if (initializer != null) {
+                body = Stmt.Block(listOf(initializer, body))
+            }
+
+            return body
+        } finally {
+            loopDepth--
         }
+    }
 
-        if (condition == null) condition = Expr.Literal(true)
-        body = Stmt.While(condition, body)
-
-        if (initializer != null) {
-            body = Stmt.Block(listOf(initializer, body))
+    /**
+     * breakStmt -> ;
+     */
+    private fun breakStatement(): Stmt {
+        if (loopDepth == 0) {
+            error(previous(), "Must be inside a loop to use a 'break'.")
         }
+        consume(TokenType.SEMICOLON, "Expect ';' after break.")
+        return Stmt.Break()
+    }
 
-        return body
+    /**
+     * continueStmt -> ;
+     */
+    private fun continueStatement(): Stmt {
+        if (loopDepth == 0) {
+            error(previous(), "Must be inside a loop to use a 'continue'.")
+        }
+        consume(TokenType.SEMICOLON, "Expect ';' after continue.")
+        return Stmt.Continue()
     }
 
     /**

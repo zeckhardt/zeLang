@@ -8,7 +8,7 @@
 
 `varDecl        -> "var" IDENTIFIER ( "=" expression )? ";" ;`
 
-`statement      -> exprStmt | printStmt | block | ifStmt | whileStmt | forStmt ;`
+`statement      -> exprStmt | printStmt | block | ifStmt | whileStmt | forStmt | breakStmt | continueStmt ;`
 
 `exprStmt       -> expression ';' ;`
 
@@ -21,6 +21,10 @@
 `whileStmt      -> "while" "(" expression ")" statement ;`
 
 `forStmt        -> "for" "(" ( varDecl | exprStmt | ";" ) expression? ";" expression? ")" statement ;`
+
+`breakStmt      -> ;`
+
+`continueStmt   -> ;`
 
 `expression     -> comma ;`
 

@@ -4,6 +4,8 @@ import Environment
 
 class Interpreter {
     private var environment = Environment()
+    private class BreakException : RuntimeException()
+    private class ContinueException: RuntimeException()
 
     fun interpret(statements: List<Stmt>) {
         try {
@@ -176,8 +178,22 @@ class Interpreter {
 
             is Stmt.While -> {
                 while (isTruthy(evaluate(stmt.condition))) {
-                    execute(stmt.body)
+                    try {
+                        execute(stmt.body)
+                    } catch (_: ContinueException) {
+                        continue
+                    } catch (_: BreakException) {
+                        break
+                    }
                 }
+            }
+
+            is Stmt.Break -> {
+                throw BreakException()
+            }
+
+            is Stmt.Continue -> {
+                throw ContinueException()
             }
 
             null -> null
