@@ -350,7 +350,7 @@ class Parser(
     }
 
     /**
-     * unary -> ( "!" | "-" ) unary | primary ;
+     * unary -> ( "!" | "-" ) unary | call ;
      */
     private fun unary(): Expr {
         if (match(TokenType.BANG, TokenType.MINUS)) {
@@ -359,7 +359,41 @@ class Parser(
             return Expr.Unary(operator, right)
         }
 
-        return primary()
+        return call()
+    }
+
+    // Helper function to clean up the call function.
+    private fun finishCall(callee: Expr): Expr {
+        val arguments = ArrayList<Expr>()
+        if (!check(TokenType.RIGHT_PAREN)) {
+            do {
+                if (arguments.size >= 255) {
+                    error(peek(), "Can't have more than 255 arguments.")
+                }
+                arguments.add(expression())
+            } while (match(TokenType.COMMA))
+        }
+
+        val paren: Token = consume(TokenType.RIGHT_PAREN, "Expect ')' after arguments.")
+
+        return Expr.Call(callee, paren, arguments)
+    }
+
+    /**
+     * call ->  primary ( "(" arguments ")" )* ;
+     */
+    private fun call(): Expr {
+        var expr: Expr = primary()
+
+        while (true) {
+            if (match(TokenType.LEFT_PAREN)) {
+                expr = finishCall(expr)
+            } else {
+                break
+            }
+        }
+
+        return expr
     }
 
     private fun primary(): Expr {

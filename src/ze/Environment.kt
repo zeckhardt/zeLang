@@ -1,5 +1,4 @@
-import ze.RuntimeError
-import ze.Token
+package ze
 
 class Environment(
     val enclosing: Environment? = null

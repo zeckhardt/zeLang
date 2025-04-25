@@ -1,11 +1,24 @@
 package ze
 
-import Environment
 
 class Interpreter {
-    private var environment = Environment()
     private class BreakException : RuntimeException()
     private class ContinueException: RuntimeException()
+    val globals: Environment = Environment()
+    private var environment = globals
+
+    // native functions
+    init {
+        globals.define("clock", object : LangCallable {
+            override fun arity(): Int = 0
+
+            override fun call(interpreter: Interpreter, arguments: List<Any?>): Any? {
+                return System.currentTimeMillis().toDouble() / 1000.0
+            }
+
+            override fun toString(): String = "<native fn>"
+        })
+    }
 
     fun interpret(statements: List<Stmt>) {
         try {
@@ -137,6 +150,26 @@ class Interpreter {
                 }
 
                 return evaluate(expr.right)
+            }
+
+            is Expr.Call -> {
+                val callee: Any? = evaluate(expr.callee)
+
+                val arguments = ArrayList<Any?>()
+                for (argument in expr.arguments) {
+                    arguments.add(argument)
+                }
+
+                if (callee !is LangCallable) {
+                    throw RuntimeError(expr.paren, "Can only call functions and classes.")
+                }
+
+                val function: LangCallable = callee
+                if (arguments.size != function.arity()) {
+                    throw RuntimeError(expr.paren, "Expected ${function.arity()} arguments but got ${arguments.size}.")
+                }
+
+                return function.call(this, arguments)
             }
 
             null -> null

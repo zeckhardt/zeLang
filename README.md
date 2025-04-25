@@ -46,6 +46,8 @@
 
 `factor         -> unary ( ( "/" | "*" ) unary )* ;`
 
-`unary          -> ( "!" | "-" ) unary | primary ;`
+`unary          -> ( "!" | "-" ) unary | call ;`
+
+`call           -> ( "(" arguments? ")" )* ;`
 
 `primary        -> NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER;`
