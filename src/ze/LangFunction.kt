@@ -1,11 +1,13 @@
 package ze
 
 class LangFunction(
-    private val declaration: Stmt.Function
+    private val name: String?,
+    private val declaration: Expr.Function,
+    private val closure: Environment
 ) : LangCallable {
 
     override fun call(interpreter: Interpreter, arguments: List<Any?>): Any? {
-        val environment: Environment = Environment(interpreter.globals)
+        val environment = Environment(closure)
         for (i in 0 until declaration.params.size) {
             environment.define(declaration.params[i].lexeme, arguments[i])
         }
@@ -23,6 +25,7 @@ class LangFunction(
     }
 
     override fun toString(): String {
-        return "<fn ${declaration.name.lexeme}>"
+        if (name == null) return "<fn>"
+        return "<fn $name>"
     }
 }

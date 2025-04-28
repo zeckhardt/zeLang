@@ -172,6 +172,10 @@ class Interpreter {
                 return function.call(this, arguments)
             }
 
+            is Expr.Function -> {
+                return LangFunction(null, expr, environment)
+            }
+
             null -> null
         }
     }
@@ -230,8 +234,8 @@ class Interpreter {
             }
 
             is Stmt.Function -> {
-                val function = LangFunction(stmt)
-                environment.define(stmt.name.lexeme, function)
+                val fnName: String = stmt.name.lexeme
+                environment.define(fnName, LangFunction(fnName, stmt.function, environment))
             }
 
             is Stmt.Return -> {

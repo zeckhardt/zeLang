@@ -11,4 +11,5 @@ sealed class Expr {
     data class Conditional(val condition: Expr, val thenBranch: Expr, val elseBranch: Expr) : Expr()
     data class Logical(val left: Expr, val operator: Token, val right: Expr) : Expr()
     data class Call(val callee: Expr, val paren: Token, val arguments: List<Expr>) : Expr()
+    data class Function(val params: List<Token>, val body: List<Stmt?>) : Expr()
 }

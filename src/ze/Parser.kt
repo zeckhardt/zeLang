@@ -21,7 +21,10 @@ class Parser(
      */
     private fun declaration(): Stmt? {
         try {
-            if (match(TokenType.FUNCTION)) return function("function")
+            if (check(TokenType.FUNCTION) && checkNext(TokenType.IDENTIFIER)) {
+                consume(TokenType.FUNCTION, "null")
+                return function("function")
+            }
             if (match(TokenType.VAR)) return varDeclaration()
             if (match(TokenType.RETURN)) return returnStatement()
 
@@ -64,13 +67,18 @@ class Parser(
     /**
      * function -> IDENTIFIER "(" parameters? ")" block ;
      */
-    private fun function(kind: String): Stmt.Function {
+    private fun function(kind: String): Stmt.Function? {
         val name: Token = consume(TokenType.IDENTIFIER, "Expect $kind name.")
+        return Stmt.Function(name, functionBody(kind))
+    }
+
+    private fun functionBody(kind: String): Expr.Function {
+        consume(TokenType.LEFT_PAREN, "Expect '(' after $kind name.")
         val parameters = ArrayList<Token>()
         if (!check(TokenType.RIGHT_PAREN)) {
             do {
-                if (parameters.size >= 255) {
-                    error(peek(), "Can't have more than 255 parameters.")
+                if (parameters.size >= 8) {
+                    error(peek(), "Can't have more than 8 parameters.")
                 }
 
                 parameters.add(consume(TokenType.IDENTIFIER, "Expect parameter name."))
@@ -80,7 +88,7 @@ class Parser(
 
         consume(TokenType.LEFT_BRACE, "Expect '{' before $kind body.")
         val body: List<Stmt?> = block()
-        return Stmt.Function(name, parameters, body)
+        return Expr.Function(parameters, body)
     }
 
     /**
@@ -438,6 +446,7 @@ class Parser(
         if (match(TokenType.FALSE)) return Expr.Literal(false)
         if (match(TokenType.TRUE)) return Expr.Literal(true)
         if (match(TokenType.NONE)) return Expr.Literal(null)
+        if (match(TokenType.FUNCTION)) return functionBody("function")
 
         if (match(TokenType.NUMBER, TokenType.STRING)) {
             return Expr.Literal(previous().literal)
@@ -470,6 +479,12 @@ class Parser(
     private fun check(type: TokenType): Boolean {
         if (isAtEnd()) return false
         return peek().type == type
+    }
+
+    private fun checkNext(tokenType: TokenType): Boolean {
+        if (!isAtEnd()) return false
+        if (tokens[curr + 1].type == TokenType.EOF) return false
+        return tokens[curr + 1].type == tokenType
     }
 
     private fun advance(): Token {
