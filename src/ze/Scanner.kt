@@ -13,7 +13,7 @@ class Scanner(
         "else" to TokenType.ELSE,
         "false" to TokenType.FALSE,
         "for" to TokenType.FOR,
-        "fun" to TokenType.FUNCTION,
+        "fn" to TokenType.FUNCTION,
         "if" to TokenType.IF,
         "nil" to TokenType.NONE,
         "or" to TokenType.OR,

@@ -4,11 +4,17 @@
 
 `program        -> declaration* EOF ;`
 
-`declaration    -> varDecl | statement ;`
+`declaration    -> varDecl | fnDecl | statement ;`
 
 `varDecl        -> "var" IDENTIFIER ( "=" expression )? ";" ;`
 
-`statement      -> exprStmt | printStmt | block | ifStmt | whileStmt | forStmt | breakStmt | continueStmt ;`
+`fnDecl         -> "fn" function ;`
+
+`function       -> IDENTIFIER "(" parameters? ")" block ;`
+
+`parameters     -> IDENTIFIER ( "," IDENTIFIER )* ;`
+
+`statement      -> exprStmt | printStmt | block | ifStmt | whileStmt | forStmt | breakStmt | continueStmt | returnStmt ;`
 
 `exprStmt       -> expression ';' ;`
 
@@ -25,6 +31,8 @@
 `breakStmt      -> ;`
 
 `continueStmt   -> ;`
+
+`returnStmt     -> "return" expression? ";" ;`
 
 `expression     -> comma ;`
 

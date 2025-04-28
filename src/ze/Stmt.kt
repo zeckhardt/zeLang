@@ -9,4 +9,6 @@ sealed class Stmt {
     data class While(val condition: Expr, val body: Stmt) : Stmt()
     class Break : Stmt()
     class Continue : Stmt()
+    data class Function(val name: Token, val params: List<Token>, val body: List<Stmt?>) : Stmt()
+    data class Return(val keyword: Token, val value: Expr?) : Stmt()
 }

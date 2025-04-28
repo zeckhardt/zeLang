@@ -229,6 +229,20 @@ class Interpreter {
                 throw ContinueException()
             }
 
+            is Stmt.Function -> {
+                val function = LangFunction(stmt)
+                environment.define(stmt.name.lexeme, function)
+            }
+
+            is Stmt.Return -> {
+                var value: Any? = null
+                if (stmt.value != null) {
+                    value = evaluate(stmt.value)
+                }
+
+                throw Return(value)
+            }
+
             null -> null
         }
         return null

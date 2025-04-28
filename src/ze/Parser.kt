@@ -21,7 +21,9 @@ class Parser(
      */
     private fun declaration(): Stmt? {
         try {
+            if (match(TokenType.FUNCTION)) return function("function")
             if (match(TokenType.VAR)) return varDeclaration()
+            if (match(TokenType.RETURN)) return returnStatement()
 
             return statement()
         } catch (_: ParseError) {
@@ -43,6 +45,42 @@ class Parser(
 
         consume(TokenType.SEMICOLON, "Expect ';' after variable declaration.")
         return Stmt.Var(name, initializer)
+    }
+
+    /**
+     * returnStmt -> "return" expression? ";" ;
+     */
+    private fun returnStatement(): Stmt {
+        val keyword: Token = previous()
+        var value: Expr? = null
+        if (!check(TokenType.SEMICOLON)) {
+            value = expression()
+        }
+
+        consume(TokenType.SEMICOLON, "Expect ';' after return value.")
+        return Stmt.Return(keyword, value)
+    }
+
+    /**
+     * function -> IDENTIFIER "(" parameters? ")" block ;
+     */
+    private fun function(kind: String): Stmt.Function {
+        val name: Token = consume(TokenType.IDENTIFIER, "Expect $kind name.")
+        val parameters = ArrayList<Token>()
+        if (!check(TokenType.RIGHT_PAREN)) {
+            do {
+                if (parameters.size >= 255) {
+                    error(peek(), "Can't have more than 255 parameters.")
+                }
+
+                parameters.add(consume(TokenType.IDENTIFIER, "Expect parameter name."))
+            } while (match(TokenType.COMMA))
+        }
+        consume(TokenType.RIGHT_PAREN, "Expect ')' after parameters.")
+
+        consume(TokenType.LEFT_BRACE, "Expect '{' before $kind body.")
+        val body: List<Stmt?> = block()
+        return Stmt.Function(name, parameters, body)
     }
 
     /**
