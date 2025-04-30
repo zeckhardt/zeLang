@@ -32,4 +32,21 @@ class Environment(
 
         throw RuntimeError(name, "Unidentified variable '${name.lexeme}'.")
     }
+
+    fun getAt(distance: Int, name: String): Any? {
+        return ancestor(distance).values[name]
+    }
+
+    fun ancestor(distance: Int): Environment {
+        var environment: Environment = this
+        for (i in 0 until distance) {
+            environment = environment.enclosing!!
+        }
+
+        return environment
+    }
+
+    fun assignAt(distance: Int, name: Token, value: Any?) {
+        ancestor(distance).values.put(name.lexeme, value)
+    }
 }

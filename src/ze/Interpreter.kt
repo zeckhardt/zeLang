@@ -6,6 +6,7 @@ class Interpreter {
     private class ContinueException: RuntimeException()
     val globals: Environment = Environment()
     private var environment = globals
+    private val locals = HashMap<Expr, Int>()
 
     // native functions
     init {
@@ -20,7 +21,7 @@ class Interpreter {
         })
     }
 
-    fun interpret(statements: List<Stmt>) {
+    fun interpret(statements: List<Stmt?>) {
         try {
             for (statement in statements) {
                 execute(statement)
@@ -111,12 +112,19 @@ class Interpreter {
             }
 
             is Expr.Variable -> {
-                return environment.get(expr.name)
+                return lookupVariable(expr.name, expr)
             }
 
             is Expr.Assign -> {
                 val value: Any? = evaluate(expr.value)
-                environment.assign(expr.name, value)
+
+                val distance = locals[expr]
+                if (distance != null) {
+                    environment.assignAt(distance, expr.name, value)
+                } else {
+                    globals.assign(expr.name, value)
+                }
+
                 return value
             }
 
@@ -252,6 +260,10 @@ class Interpreter {
         return null
     }
 
+    fun resolve(expr: Expr, depth: Int) {
+        locals.put(expr, depth)
+    }
+
     fun executeBlock(statements: List<Stmt?>, environment: Environment) {
         val previous: Environment = this.environment
         try {
@@ -299,5 +311,14 @@ class Interpreter {
             return text
         }
         return obj.toString()
+    }
+
+    private fun lookupVariable(name: Token, expr: Expr): Any? {
+        val distance = locals[expr]
+        if (distance != null) {
+            return environment.getAt(distance, name.lexeme)
+        } else {
+            return globals.get(name)
+        }
     }
 }

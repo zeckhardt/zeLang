@@ -48,9 +48,15 @@ object Ze {
         val tokens = scanner.scanTokens()
 
         val parser = Parser(tokens)
-        val statements: List<Stmt> = parser.parse()
+        val statements = parser.parse()
 
         // Stop if there was a syntax error
+        if (hadError) return
+
+        val resolver = Resolver(interpreter)
+        statements.forEach { resolver.resolve(it) }
+
+        // Stop if there was a resolution error
         if (hadError) return
 
         interpreter.interpret(statements)
