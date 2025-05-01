@@ -5,14 +5,14 @@ class Resolver(
 ) {
     private enum class FunctionType {
         NONE,
-        FUNCTION
+        FUNCTION,
+        METHOD,
+        INITIALIZER
     }
 
     private class Variable(
         val name: Token, var state: VariableState
-    ) {
-
-    }
+    )
 
     private enum class VariableState {
         DECLARED,
@@ -20,9 +20,15 @@ class Resolver(
         READ
     }
 
+    private enum class ClassType {
+        NONE,
+        CLASS
+    }
+
     private val scopes = ArrayDeque<MutableMap<String, Variable>>()
     private var insideLoop: Int = 0
     private var currentFunction = FunctionType.NONE
+    private var currentClass: ClassType = ClassType.NONE
 
     fun resolve(stmt: Stmt?): Void? {
         when (stmt) {
@@ -66,6 +72,10 @@ class Resolver(
                 }
 
                 if (stmt.value != null) {
+                    if (currentFunction == FunctionType.INITIALIZER) {
+                        Ze.error(stmt.keyword, "Can't return a value from an initializer.")
+                    }
+
                     resolve(stmt.value)
                 }
             }
@@ -81,6 +91,28 @@ class Resolver(
                 if (insideLoop == 0) {
                     error("Can't use ${if (stmt is Stmt.Break) "break" else "continue"} outside of a loop.")
                 }
+            }
+
+            is Stmt.Class -> {
+                val enclosingClass: ClassType = currentClass
+                currentClass = ClassType.CLASS
+
+                declare(stmt.name)
+                define(stmt.name)
+
+                beginScope()
+                scopes.first().put("this", Variable(stmt.name, VariableState.DEFINED))
+
+                for (method: Stmt.Function in stmt.methods) {
+                    var declaration: FunctionType = FunctionType.METHOD
+                    if (method.name.lexeme == "init") {
+                        declaration = FunctionType.INITIALIZER
+                    }
+                    resolveFunction(method.function, declaration)
+                }
+
+                endScope()
+                currentClass = enclosingClass
             }
 
             null -> null
@@ -148,6 +180,23 @@ class Resolver(
                 resolve(expr.condition)
                 resolve(expr.thenBranch)
                 resolve(expr.elseBranch)
+            }
+
+            is Expr.Get -> {
+                resolve(expr.obj)
+            }
+
+            is Expr.Set -> {
+                resolve(expr.value)
+                resolve(expr.obj)
+            }
+
+            is Expr.This -> {
+                if (currentClass == ClassType.NONE) {
+                    Ze.error(expr.keyword, "Can't use 'this' outside of a class.")
+                    return null
+                }
+                resolveLocal(expr, expr.keyword, false)
             }
         }
 

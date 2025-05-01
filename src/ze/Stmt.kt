@@ -11,4 +11,5 @@ sealed class Stmt {
     class Continue : Stmt()
     data class Function(val name: Token, val function: Expr.Function) : Stmt()
     data class Return(val keyword: Token, val value: Expr?) : Stmt()
+    data class Class(val name: Token, val methods: List<Function>) : Stmt()
 }

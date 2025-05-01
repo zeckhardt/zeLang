@@ -21,6 +21,7 @@ class Parser(
      */
     private fun declaration(): Stmt? {
         try {
+            if (match(TokenType.CLASS)) return classDeclaration()
             if (check(TokenType.FUNCTION) && checkNext(TokenType.IDENTIFIER)) {
                 consume(TokenType.FUNCTION, "null")
                 return function("function")
@@ -62,6 +63,23 @@ class Parser(
 
         consume(TokenType.SEMICOLON, "Expect ';' after return value.")
         return Stmt.Return(keyword, value)
+    }
+
+    /**
+     * classDecl -> "class" IDENTIFIER "{" function* "}" ;
+     */
+    private fun classDeclaration(): Stmt {
+        val name: Token = consume(TokenType.IDENTIFIER, "Expect class name.")
+        consume(TokenType.LEFT_BRACE, "Expect '{' before class body.")
+
+        val methods = ArrayList<Stmt.Function?>()
+        while (!check(TokenType.RIGHT_BRACE) && !isAtEnd()) {
+            methods.add(function("method"))
+        }
+
+        consume(TokenType.RIGHT_BRACE, "Expect '}' after class body.")
+
+        return Stmt.Class(name, methods as List<Stmt.Function>)
     }
 
     /**
@@ -286,7 +304,7 @@ class Parser(
     }
 
     /**
-     * assignment > IDENTIFIER '=' assignment | logic_or ;
+     * assignment > ( call "." )? IDENTIFIER "=" assignment | logic_or ; ;
      */
     private fun assignment(): Expr {
         val expr = or()
@@ -298,6 +316,9 @@ class Parser(
             if (expr is Expr.Variable) {
                 val name: Token = expr.name
                 return Expr.Assign(name, value)
+            } else if (expr is Expr.Get) {
+                val get: Expr.Get = expr
+                return Expr.Set(get.obj, get.name, value)
             }
 
             error(equals, "Invalid assignment target.")
@@ -434,6 +455,9 @@ class Parser(
         while (true) {
             if (match(TokenType.LEFT_PAREN)) {
                 expr = finishCall(expr)
+            } else if (match(TokenType.DOT)) {
+                val name: Token = consume(TokenType.IDENTIFIER, "Expect property name after '.'.")
+                expr = Expr.Get(expr, name)
             } else {
                 break
             }
@@ -451,6 +475,8 @@ class Parser(
         if (match(TokenType.NUMBER, TokenType.STRING)) {
             return Expr.Literal(previous().literal)
         }
+
+        if (match(TokenType.THIS)) return Expr.This(previous())
 
         if (match(TokenType.IDENTIFIER)) {
             return Expr.Variable(previous())

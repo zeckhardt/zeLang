@@ -4,11 +4,13 @@
 
 `program        -> declaration* EOF ;`
 
-`declaration    -> varDecl | fnDecl | statement ;`
+`declaration    -> varDecl | fnDecl | classDecl | statement ;`
 
 `varDecl        -> "var" IDENTIFIER ( "=" expression )? ";" ;`
 
 `fnDecl         -> "fn" function ;`
+
+`classDecl      -> "class" IDENTIFIER "{" function* "}" ;`
 
 `function       -> IDENTIFIER "(" parameters? ")" block ;`
 
@@ -40,7 +42,7 @@
 
 `conditional    -> assignment ( "?" expression ":" conditional )? ;`
 
-`assignment     -> IDENTIFIER '=' assignment | logic_or ;`
+`assignment     -> ( call "." )? IDENTIFIER "=" assignment | logic_or ;`
 
 `logic_or       -> logic_and ( "or" logic_and )* ;`
 
@@ -56,6 +58,6 @@
 
 `unary          -> ( "!" | "-" ) unary | call ;`
 
-`call           -> ( "(" arguments? ")" )* ;`
+`call           -> primary ( "(" arguments? ")" | "." IDENTIFIER )* ;`
 
 `primary        -> NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER;`

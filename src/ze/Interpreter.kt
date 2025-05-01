@@ -181,7 +181,32 @@ class Interpreter {
             }
 
             is Expr.Function -> {
-                return LangFunction(null, expr, environment)
+                return LangFunction(null, expr, environment, false)
+            }
+
+            is Expr.Get -> {
+                val obj = evaluate(expr.obj)
+                if (obj is LangInstance) {
+                    return obj.get(expr.name)
+                }
+
+                throw RuntimeError(expr.name, "Only instances have properties.")
+            }
+
+            is Expr.Set -> {
+                val obj = evaluate(expr.obj)
+
+                if (obj !is LangInstance) {
+                    throw RuntimeError(expr.name, "Only instances have fields.")
+                }
+
+                val value = evaluate(expr.value)
+                obj.set(expr.name, value)
+                return value
+            }
+
+            is Expr.This -> {
+                return lookupVariable(expr.keyword, expr)
             }
 
             null -> null
@@ -243,7 +268,7 @@ class Interpreter {
 
             is Stmt.Function -> {
                 val fnName: String = stmt.name.lexeme
-                environment.define(fnName, LangFunction(fnName, stmt.function, environment))
+                environment.define(fnName, LangFunction(fnName, stmt.function, environment, false))
             }
 
             is Stmt.Return -> {
@@ -253,6 +278,18 @@ class Interpreter {
                 }
 
                 throw Return(value)
+            }
+
+            is Stmt.Class -> {
+                environment.define(stmt.name.lexeme, null)
+                val methods = HashMap<String, LangFunction>()
+                for (method in stmt.methods) {
+                    val function = LangFunction(stmt.name.lexeme, method.function, environment,
+                        method.name.lexeme == "init")
+                    methods.put(method.name.lexeme, function)
+                }
+                val klass = LangClass(stmt.name.lexeme, methods)
+                environment.assign(stmt.name, klass)
             }
 
             null -> null
