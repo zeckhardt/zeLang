@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2ee5508c-237b-4fd2-a6d4-00023c43ab93" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeLang.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/ZeLang.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Environment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Environment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Expr.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Expr.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Interpreter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Interpreter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/LangCallable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/LangCallable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/LangClass.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/LangClass.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/LangFunction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/LangFunction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/LangInstance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/LangInstance.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Parser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Parser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Resolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Resolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Return.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Return.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/RuntimeError.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/RuntimeError.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Scanner.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Scanner.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Stmt.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Stmt.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Token.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Token.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/TokenType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/TokenType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ze/Ze.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ktInterpreter/src/ze/Ze.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2vpqtEOHXfp5xID6DDU1VGmSBfS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Kotlin.Ze.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ktInterpreter" />
+    </key>
+    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="ze" />
+      <recent name="zek" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Ze" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ze.Ze" />
+      <module name="ZeLang" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.Ze" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2ee5508c-237b-4fd2-a6d4-00023c43ab93" name="Changes" comment="" />
+      <created>1744852575621</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744852575621</updated>
+      <workItem from="1744852576729" duration="16879000" />
+      <workItem from="1744936765953" duration="438000" />
+      <workItem from="1744991518971" duration="3300000" />
+      <workItem from="1745363364853" duration="13732000" />
+      <workItem from="1745449260664" duration="55000" />
+      <workItem from="1745604658960" duration="3633000" />
+      <workItem from="1745782712097" duration="34276000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
