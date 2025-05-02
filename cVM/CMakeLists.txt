@@ -9,4 +9,5 @@ add_executable(cVM
         memory.c
         debug.c
         value.c
+        vm.c
 )
