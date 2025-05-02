@@ -1,0 +1,3 @@
+/Users/zeckhardt/zeckLang/cVM/cmake-build-debug/CMakeFiles/cVM.dir
+/Users/zeckhardt/zeckLang/cVM/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/zeckhardt/zeckLang/cVM/cmake-build-debug/CMakeFiles/rebuild_cache.dir
