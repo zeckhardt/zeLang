@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#include "common.h"
-#include "compiler.h"
-#include "scanner.h"
+#include "../include/common.h"
+#include "../include/compiler.h"
+#include "../include/scanner.h"
 
 void compile(const char* source) {
     initScanner(source);

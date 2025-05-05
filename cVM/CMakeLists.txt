@@ -3,13 +3,7 @@ project(cVM C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(cVM
-        main.c
-        chunk.c
-        memory.c
-        debug.c
-        value.c
-        vm.c
-        compiler.c
-        scanner.c
-)
+include_directories(include)
+
+file(GLOB SOURCES "src/*.c")
+add_executable(cVM ${SOURCES})

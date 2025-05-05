@@ -49,53 +49,61 @@ cmake_ninja_workdir = /Users/zeckhardt/zeckLang/cVM/cmake-build-debug/
 
 build cmake_object_order_depends_target_cVM: phony || .
 
-build CMakeFiles/cVM.dir/main.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/main.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/main.c.o.d
+build CMakeFiles/cVM.dir/src/chunk.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/chunk.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/chunk.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/chunk.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/chunk.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/chunk.c.o.d
+build CMakeFiles/cVM.dir/src/compiler.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/compiler.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/compiler.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/memory.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/memory.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/memory.c.o.d
+build CMakeFiles/cVM.dir/src/debug.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/debug.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/debug.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/debug.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/debug.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/debug.c.o.d
+build CMakeFiles/cVM.dir/src/main.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/main.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/main.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/value.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/value.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/value.c.o.d
+build CMakeFiles/cVM.dir/src/memory.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/memory.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/memory.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/vm.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/vm.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/vm.c.o.d
+build CMakeFiles/cVM.dir/src/scanner.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/scanner.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/scanner.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/compiler.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/compiler.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/compiler.c.o.d
+build CMakeFiles/cVM.dir/src/value.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/value.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/value.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
-build CMakeFiles/cVM.dir/scanner.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/scanner.c || cmake_object_order_depends_target_cVM
-  DEP_FILE = CMakeFiles/cVM.dir/scanner.c.o.d
+build CMakeFiles/cVM.dir/src/vm.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/src/vm.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/src/vm.c.o.d
   FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/zeckhardt/zeckLang/cVM/include
   OBJECT_DIR = CMakeFiles/cVM.dir
-  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir/src
 
 
 # =============================================================================
@@ -105,7 +113,7 @@ build CMakeFiles/cVM.dir/scanner.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zec
 #############################################
 # Link the executable cVM
 
-build cVM: C_EXECUTABLE_LINKER__cVM_Debug CMakeFiles/cVM.dir/main.c.o CMakeFiles/cVM.dir/chunk.c.o CMakeFiles/cVM.dir/memory.c.o CMakeFiles/cVM.dir/debug.c.o CMakeFiles/cVM.dir/value.c.o CMakeFiles/cVM.dir/vm.c.o CMakeFiles/cVM.dir/compiler.c.o CMakeFiles/cVM.dir/scanner.c.o
+build cVM: C_EXECUTABLE_LINKER__cVM_Debug CMakeFiles/cVM.dir/src/chunk.c.o CMakeFiles/cVM.dir/src/compiler.c.o CMakeFiles/cVM.dir/src/debug.c.o CMakeFiles/cVM.dir/src/main.c.o CMakeFiles/cVM.dir/src/memory.c.o CMakeFiles/cVM.dir/src/scanner.c.o CMakeFiles/cVM.dir/src/value.c.o CMakeFiles/cVM.dir/src/vm.c.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk
   OBJECT_DIR = CMakeFiles/cVM.dir
   POST_BUILD = :

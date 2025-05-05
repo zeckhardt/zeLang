@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "common.h"
-#include "scanner.h"
+#include "../include/common.h"
+#include "../include/scanner.h"
 
 /// Consumes source code, tracking the progress along the way.
 typedef struct {
