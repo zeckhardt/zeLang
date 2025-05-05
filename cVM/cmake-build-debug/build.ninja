@@ -85,6 +85,18 @@ build CMakeFiles/cVM.dir/vm.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhard
   OBJECT_DIR = CMakeFiles/cVM.dir
   OBJECT_FILE_DIR = CMakeFiles/cVM.dir
 
+build CMakeFiles/cVM.dir/compiler.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/compiler.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/compiler.c.o.d
+  FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+
+build CMakeFiles/cVM.dir/scanner.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhardt/zeckLang/cVM/scanner.c || cmake_object_order_depends_target_cVM
+  DEP_FILE = CMakeFiles/cVM.dir/scanner.c.o.d
+  FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/cVM.dir
+  OBJECT_FILE_DIR = CMakeFiles/cVM.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target cVM
@@ -93,7 +105,7 @@ build CMakeFiles/cVM.dir/vm.c.o: C_COMPILER__cVM_unscanned_Debug /Users/zeckhard
 #############################################
 # Link the executable cVM
 
-build cVM: C_EXECUTABLE_LINKER__cVM_Debug CMakeFiles/cVM.dir/main.c.o CMakeFiles/cVM.dir/chunk.c.o CMakeFiles/cVM.dir/memory.c.o CMakeFiles/cVM.dir/debug.c.o CMakeFiles/cVM.dir/value.c.o CMakeFiles/cVM.dir/vm.c.o
+build cVM: C_EXECUTABLE_LINKER__cVM_Debug CMakeFiles/cVM.dir/main.c.o CMakeFiles/cVM.dir/chunk.c.o CMakeFiles/cVM.dir/memory.c.o CMakeFiles/cVM.dir/debug.c.o CMakeFiles/cVM.dir/value.c.o CMakeFiles/cVM.dir/vm.c.o CMakeFiles/cVM.dir/compiler.c.o CMakeFiles/cVM.dir/scanner.c.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk
   OBJECT_DIR = CMakeFiles/cVM.dir
   POST_BUILD = :
