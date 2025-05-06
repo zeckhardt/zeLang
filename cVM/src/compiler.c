@@ -18,6 +18,7 @@ typedef struct {
 typedef enum {
     PREC_NONE,
     PREC_ASSIGNMENT,  // =
+    PREC_CONDITIONAL, // ? :
     PREC_OR,          // or
     PREC_AND,         // and
     PREC_EQUALITY,    // == !=
@@ -180,6 +181,18 @@ static void grouping() {
     expression();
     consume(TOKEN_RIGHT_PAREN, "Expect ')' after expression.");
 }
+
+/**
+static void conditional() {
+    // compile then branch.
+    parsePrecedence(compiler, PREC_CONDITIONAL);
+
+    consume(compiler, TOKEN_COLON, "Expect ':' after then branch of conditional operator.");
+
+    // compile else branch.
+    parsePrecedence(compiler, PREC_ASSIGNMENT);
+}
+ */
 
 ParseRule rules[] = {
         [TOKEN_LEFT_PAREN]    = {grouping, NULL,   PREC_NONE},
