@@ -7,10 +7,17 @@
 // 1 byte operation code used to control instructions like add, subtract, etc.
 typedef enum {
     OP_CONSTANT,
+    OP_NONE,
+    OP_TRUE,
+    OP_FALSE,
+    OP_EQUAL,
+    OP_GREATER,
+    OP_LESS,
     OP_ADD,
     OP_SUBTRACT,
     OP_MULTIPLY,
     OP_DIVIDE,
+    OP_NOT,
     OP_NEGATE,
     OP_RETURN,
 } OpCode;
