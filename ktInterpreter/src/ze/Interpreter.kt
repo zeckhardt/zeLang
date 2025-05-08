@@ -1,5 +1,7 @@
 package ze
 
+import ze.natives.CoreNatives
+
 
 class Interpreter {
     private class BreakException : RuntimeException()
@@ -10,15 +12,7 @@ class Interpreter {
 
     // native functions
     init {
-        globals.define("clock", object : LangCallable {
-            override fun arity(): Int = 0
-
-            override fun call(interpreter: Interpreter, arguments: List<Any?>): Any? {
-                return System.currentTimeMillis().toDouble() / 1000.0
-            }
-
-            override fun toString(): String = "<native fn>"
-        })
+        CoreNatives.register(globals)
     }
 
     fun interpret(statements: List<Stmt?>) {
